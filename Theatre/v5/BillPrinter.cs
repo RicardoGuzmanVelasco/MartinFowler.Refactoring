@@ -20,7 +20,7 @@ namespace MartinFowler.Refactoring.Theatre.v5
                 result += $" {PlayFor(perf).name}: {AmountFor(perf) / 100} ({perf.audience})\n";
                 totalAmount += AmountFor(perf);
             }
-            result += $"Amount owed is {Format(totalAmount)}\n";
+            result += $"Amount owed is {USD(totalAmount)}\n";
             result += $"You earned {volumeCredits} credits\n";
             return result;
             
@@ -59,7 +59,7 @@ namespace MartinFowler.Refactoring.Theatre.v5
                 return result;
             }
 
-            string Format(float i)
+            string USD(float i)
             {
                 return (i / 100).ToString(new CultureInfo("")
                 {

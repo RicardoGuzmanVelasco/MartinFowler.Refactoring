@@ -31,7 +31,7 @@ class BillPrinter{
     -AmountFor(aPerformance: Performance): int <<local>>
     -PlayFor(aPerformance: Performance): int <<local>>
     -VolumeCreditsFor(aPerformance: Performance): int <<local>>
-    -Format(aNumber: float): string <<local>>
+    -USD(aNumber: float): string <<local>>
 }
 
 '''''''''''''
