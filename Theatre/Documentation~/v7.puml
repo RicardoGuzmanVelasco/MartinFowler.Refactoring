@@ -30,7 +30,18 @@ class Play{
     +type: PlayType
 }
 
--class StatementData{
+#class StatementDataCreation <<Static>>{
+    #Create(invoice: Invoice, plays: Dictionary): StatementData
+    
+    -EnrichPerformance((aPerformance: Performance): Performance <<local>>
+    -AmountFor(aPerformance: Performance): int <<local>>
+    -PlayFor(aPerformance: Performance): int <<local>>
+    -VolumeCreditsFor(aPerformance: Performance): int <<local>>
+    -TotalVolumeCredits(): int <<local>>
+    -TotalAmount(): int <<local>>
+}
+
+#class StatementData{
     +invoiceCustomer: string
     +performances: Performance[]
     
@@ -41,15 +52,11 @@ class Play{
 class BillPrinter{
     +Statement(invoice: Invoice, plays: Dictionary): string 
     -RenderPlainText(data: StatementData): string
+    
+    +StatementHtml(invoice: Invoice, plays: Dictionary): string 
     -RenderHtml(data: StatementData): string
     
-    -EnrichPerformance((aPerformance: Performance): Performance <<local>>
-    -AmountFor(aPerformance: Performance): int <<local>>
-    -PlayFor(aPerformance: Performance): int <<local>>
-    -VolumeCreditsFor(aPerformance: Performance): int <<local>>
     -USD(aNumber: float): string <<local>>
-    -TotalVolumeCredits(): int <<local>>
-    -TotalAmount(): int <<local>>
 }
 
 '''''''''''''
@@ -59,6 +66,9 @@ Invoice *-- "0..*" Performance
 
 Performance *-- "1" Play
 
+StatementDataCreation --> StatementData
+
+BillPrinter ..> StatementDataCreation
 BillPrinter ..> StatementData
 
 BillPrinter ..> Invoice
