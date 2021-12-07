@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace MartinFowler.Refactoring.Theatre.v3
+namespace MartinFowler.Refactoring.Theatre.v5
 {
     public class BillPrinter
     {
@@ -11,27 +11,16 @@ namespace MartinFowler.Refactoring.Theatre.v3
             var totalAmount = 0;
             var volumeCredits = 0;
             var result = $"Statement for {invoice.customer}\n";
-            var format = new CultureInfo("format")
-            {
-                NumberFormat = new NumberFormatInfo
-                {
-                    CurrencySymbol = "$",
-                    NumberDecimalDigits = 2
-                }
-            };
+
             foreach(var perf in invoice.performances)
             {
-                // add volume credits
-                volumeCredits += Math.Max(perf.audience - 30, 0);
-                // add extra credit for every ten comedy attendees
-                if(PlayFor(perf).type == PlayType.Comedy)
-                    volumeCredits += (int)Math.Floor(perf.audience / 5f);
-                
+                volumeCredits = VolumeCreditsFor(perf);
+
                 //print line for this order
                 result += $" {PlayFor(perf).name}: {AmountFor(perf) / 100} ({perf.audience})\n";
                 totalAmount += AmountFor(perf);
             }
-            result += $"Amount owed is {(totalAmount / 100).ToString(format)}\n";
+            result += $"Amount owed is {Format(totalAmount)}\n";
             result += $"You earned {volumeCredits} credits\n";
             return result;
             
@@ -59,6 +48,28 @@ namespace MartinFowler.Refactoring.Theatre.v3
             }
             
             Play PlayFor(Performance aPerformance) => plays[aPerformance.playId];
+            
+            int VolumeCreditsFor(Performance aPerformance)
+            {
+                var result = Math.Max(aPerformance.audience - 30, 0);
+                
+                if(PlayType.Comedy == PlayFor(aPerformance).type)
+                    volumeCredits += (int)Math.Floor(aPerformance.audience / 5f);
+                
+                return result;
+            }
+
+            string Format(float i)
+            {
+                return (i / 100).ToString(new CultureInfo("")
+                {
+                    NumberFormat = new NumberFormatInfo
+                    {
+                        CurrencySymbol = "$",
+                        NumberDecimalDigits = 2
+                    }
+                });
+            }
         }
     }
 }

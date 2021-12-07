@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace MartinFowler.Refactoring.Theatre.v1
 {
@@ -10,7 +11,14 @@ namespace MartinFowler.Refactoring.Theatre.v1
             var totalAmount = 0;
             var volumeCredits = 0;
             var result = $"Statement for {invoice.customer}\n";
-
+            var format = new CultureInfo("format")
+            {
+                NumberFormat = new NumberFormatInfo
+                {
+                    CurrencySymbol = "$",
+                    NumberDecimalDigits = 2
+                }
+            }; 
             foreach(var perf in invoice.performances)
             {
                 var play = plays[perf.playId];
@@ -40,10 +48,10 @@ namespace MartinFowler.Refactoring.Theatre.v1
                     volumeCredits += (int)Math.Floor(perf.audience / 5f);
                 
                 //print line for this order
-                result += $" {play.name}: {thisAmount / 100} ({perf.audience})\n";
+                result += $" {play.name}: {(thisAmount / 100).ToString(format)} ({perf.audience})\n";
                 totalAmount += thisAmount;
             }
-            result += $"Amount owed is {totalAmount / 100}\n";
+            result += $"Amount owed is {(totalAmount / 100).ToString(format)}\n";
             result += $"You earned {volumeCredits} credits\n";
             return result;
         }
