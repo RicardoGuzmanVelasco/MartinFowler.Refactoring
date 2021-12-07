@@ -1,0 +1,50 @@
+@startuml
+title v4
+center header Refactoring | Theatre
+'''''''''''''
+allowmixing
+'''''''''''''
+
+enum PlayType{
+    Tragedy
+    Comedy
+}
+
+class Performance{
+    +playId: string
+    +audience: int
+}
+
+class Invoice{
+    +customer: string
+    +performances: Performance[]
+}
+
+class Play{
+    +playID: string
+    +name: string
+    +type: PlayType
+}
+
+class BillPrinter{
+    +Statement(invoice: Invoice, plays: Dictionary): string 
+    -AmountFor(aPerformance: Performance): int <<local>>
+    -PlayFor(aPerformance: Performance): int <<local>>
+    -VolumeCreditsFor(aPerformance: Performance): int <<local>>
+}
+
+'''''''''''''
+
+Play --> PlayType
+Invoice *-- "0..*" Performance
+
+BillPrinter ..> Invoice
+BillPrinter ..> Play
+BillPrinter ..> PlayType : switch
+
+
+'''''''''''''
+'''''''''''''
+caption Extracting volume credits
+right footer (CC-BY) RGV, 2021
+@enduml
