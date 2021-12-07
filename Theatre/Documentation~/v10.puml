@@ -89,7 +89,7 @@ BillPrinter ..> StatementData
 
 BillPrinter ..> Invoice
 BillPrinter ..> Play
-BillPrinter ..> PlayType : switch
+StatementDataCreation ..> PlayType : switch
 
 '''''''''''''
 '''''''''''''
