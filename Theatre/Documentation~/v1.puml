@@ -1,0 +1,15 @@
+@startuml
+title v1
+center header Refactoring | Theatre
+'''''''''''''
+allowmixing
+'''''''''''''
+
+
+'''''''''''''
+
+
+'''''''''''''
+'''''''''''''
+right footer (CC-BY) RGV, 2021
+@enduml
