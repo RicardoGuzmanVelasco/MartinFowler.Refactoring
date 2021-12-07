@@ -1,4 +1,4 @@
-namespace MartinFowler.Refactoring.Theatre.v2
+namespace MartinFowler.Refactoring.Theatre.v3
 {
     public enum PlayType
     {

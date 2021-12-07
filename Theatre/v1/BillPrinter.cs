@@ -14,7 +14,24 @@ namespace MartinFowler.Refactoring.Theatre.v1
             foreach(var perf in invoice.performances)
             {
                 var play = plays[perf.playId];
-                var thisAmount = AmountFor(perf, play);
+                var thisAmount = 0;
+
+                switch(play.type)
+                {
+                    case PlayType.Tragedy:
+                        thisAmount = 40000;
+                        if(perf.audience > 30)
+                            thisAmount += 1000 * (perf.audience - 30);
+                        break;
+                    case PlayType.Comedy:
+                        thisAmount = 30000;
+                        if(perf.audience > 20)
+                            thisAmount += 10000 + 500 * (perf.audience - 20);
+                        thisAmount += 300 * perf.audience;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
                 
                 // add volume credits
                 volumeCredits += Math.Max(perf.audience - 30, 0);
@@ -28,29 +45,6 @@ namespace MartinFowler.Refactoring.Theatre.v1
             }
             result += $"Amount owed is {totalAmount / 100}\n";
             result += $"You earned {volumeCredits} credits\n";
-            return result;
-        }
-
-        static int AmountFor(Performance aPerformance, Play play)
-        {
-            int result;
-            switch(play.type)
-            {
-                case PlayType.Tragedy:
-                    result = 40000;
-                    if(aPerformance.audience > 30)
-                        result += 1000 * (aPerformance.audience - 30);
-                    break;
-                case PlayType.Comedy:
-                    result = 30000;
-                    if(aPerformance.audience > 20)
-                        result += 10000 + 500 * (aPerformance.audience - 20);
-                    result += 300 * aPerformance.audience;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
             return result;
         }
     }
