@@ -2,26 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace MartinFowler.Refactoring.Theatre.v5
+namespace MartinFowler.Refactoring.Theatre.v6
 {
     public class BillPrinter
     {
         public string Statement(Invoice invoice, IDictionary<string, Play> plays)
         {
-            var totalAmount = 0;
-            var volumeCredits = 0;
             var result = $"Statement for {invoice.customer}\n";
-
+            
             foreach(var perf in invoice.performances)
-            {
-                volumeCredits = VolumeCreditsFor(perf);
-
-                //print line for this order
                 result += $" {PlayFor(perf).name}: {AmountFor(perf) / 100} ({perf.audience})\n";
-                totalAmount += AmountFor(perf);
-            }
-            result += $"Amount owed is {USD(totalAmount)}\n";
-            result += $"You earned {volumeCredits} credits\n";
+
+            result += $"Amount owed is {USD(TotalAmount())}\n";
+            result += $"You earned {TotalVolumeCredits()} credits\n";
             return result;
             
             int AmountFor(Performance aPerformance)
@@ -52,7 +45,7 @@ namespace MartinFowler.Refactoring.Theatre.v5
             int VolumeCreditsFor(Performance aPerformance)
             {
                 var result = Math.Max(aPerformance.audience - 30, 0);
-                
+
                 if(PlayType.Comedy == PlayFor(aPerformance).type)
                     result += (int)Math.Floor(aPerformance.audience / 5f);
                 
@@ -69,6 +62,26 @@ namespace MartinFowler.Refactoring.Theatre.v5
                         NumberDecimalDigits = 2
                     }
                 });
+            }
+
+            int TotalAmount()
+            {
+                var result = 0;
+
+                foreach(var perf in invoice.performances)
+                    result += AmountFor(perf);
+                
+                return result;
+            }
+
+            int TotalVolumeCredits()
+            {
+                var result = 0;
+                
+                foreach(var perf in invoice.performances)
+                    result = VolumeCreditsFor(perf);
+                
+                return result;
             }
         }
     }
