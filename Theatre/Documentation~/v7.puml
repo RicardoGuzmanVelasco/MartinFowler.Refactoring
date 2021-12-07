@@ -1,0 +1,72 @@
+@startuml
+title v7
+center header Refactoring | Theatre
+'''''''''''''
+allowmixing
+'''''''''''''
+
+enum PlayType{
+    Tragedy
+    Comedy
+}
+
+class Performance{
+    +playId: string
+    +audience: int
+    
+    +play: Play
+    +amount: int
+    +volumeCredits: int
+}
+
+class Invoice{
+    +customer: string
+    +performances: Performance[]
+}
+
+class Play{
+    +playID: string
+    +name: string
+    +type: PlayType
+}
+
+-class StatementData{
+    +invoiceCustomer: string
+    +performances: Performance[]
+    
+    +totalAmount: int
+    +TotalVolumeCredits: int
+}
+
+class BillPrinter{
+    +Statement(invoice: Invoice, plays: Dictionary): string 
+    -RenderPlainText(data: StatementData): string
+    -RenderHtml(data: StatementData): string
+    
+    -EnrichPerformance((aPerformance: Performance): Performance <<local>>
+    -AmountFor(aPerformance: Performance): int <<local>>
+    -PlayFor(aPerformance: Performance): int <<local>>
+    -VolumeCreditsFor(aPerformance: Performance): int <<local>>
+    -USD(aNumber: float): string <<local>>
+    -TotalVolumeCredits(): int <<local>>
+    -TotalAmount(): int <<local>>
+}
+
+'''''''''''''
+
+Play --> PlayType
+Invoice *-- "0..*" Performance
+
+Performance *-- "1" Play
+
+BillPrinter ..> StatementData
+
+BillPrinter ..> Invoice
+BillPrinter ..> Play
+BillPrinter ..> PlayType : switch
+
+'''''''''''''
+'''''''''''''
+caption Splitting the phases of calculation and formatting
+right footer (CC-BY) RGV, 2021
+@enduml

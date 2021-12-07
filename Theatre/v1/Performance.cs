@@ -1,3 +1,5 @@
+using System;
+
 namespace MartinFowler.Refactoring.Theatre.v1
 {
     public struct Performance

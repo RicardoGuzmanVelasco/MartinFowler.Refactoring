@@ -79,7 +79,7 @@ namespace MartinFowler.Refactoring.Theatre.v6
                 var result = 0;
                 
                 foreach(var perf in invoice.performances)
-                    result = VolumeCreditsFor(perf);
+                    result += VolumeCreditsFor(perf);
                 
                 return result;
             }
