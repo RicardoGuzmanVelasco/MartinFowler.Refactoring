@@ -1,0 +1,96 @@
+@startuml
+title v11 (own)
+center header Refactoring | Theatre
+'''''''''''''
+allowmixing
+'''''''''''''
+
+enum PlayType{
+    Tragedy
+    Comedy
+}
+
+class Performance{
+    +playId: string
+    +audience: int
+    
+    +play: Play
+    +amount: int
+    +volumeCredits: int
+}
+
+#class PerformanceCalculator{
+    +Amount: int {get;}
+    +VolumeCredits: int {get;}
+}
+
+#class TragedyCalculator{
+}
+
+#class ComedyCalculator{
+}
+
+class Invoice{
+    +customer: string
+    +performances: Performance[]
+}
+
+class Play{
+    +playID: string
+    +name: string
+    +type: PlayType
+}
+
+#class StatementDataCreation <<Static>>{
+    #Create(invoice: Invoice, plays: Dictionary): StatementData
+    
+    -EnrichPerformance((aPerformance: Performance): Performance <<local>>
+    -PlayFor(aPerformance: Performance): int <<local>>
+}
+
+#class StatementData{
+    +invoiceCustomer: string
+    +performances: Performance[]
+    
+    +TotalAmount: int {get;}
+    +TotalVolumeCredits: int {get;}
+}
+
+class BillPrinter{
+    +Statement(invoice: Invoice, plays: Dictionary): string 
+    -RenderPlainText(data: StatementData): string
+    
+    +StatementHtml(invoice: Invoice, plays: Dictionary): string 
+    -RenderHtml(data: StatementData): string
+    
+    -USD(aNumber: float): string <<local>>
+}
+
+'''''''''''''
+
+Play --> PlayType
+Invoice *-- "0..*" Performance
+
+Performance *-- "1" Play
+
+TragedyCalculator --|> PerformanceCalculator
+ComedyCalculator --|> PerformanceCalculator
+
+PerformanceCalculator --> Performance
+PerformanceCalculator --> Play
+StatementDataCreation --> PerformanceCalculator
+
+StatementDataCreation --> StatementData
+StatementDataCreation ..> PlayType : switch
+
+BillPrinter ..> StatementDataCreation
+BillPrinter ..> StatementData
+
+BillPrinter ..> Invoice
+BillPrinter ..> Play
+
+'''''''''''''
+'''''''''''''
+caption Moving totals to statement data\n(Further step, not in the book)
+right footer (CC-BY) RGV, 2021
+@enduml
