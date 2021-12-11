@@ -1,0 +1,213 @@
+@startuml
+title Code Smells to Refactorings\n\n
+center header Martin Fowler | Refactoring
+'''''''''''''
+'''''''''''''
+
+rectangle MysteriousName #implementation
+rectangle DuplicatedCode #implementation
+rectangle LongFunction #implementation
+rectangle LongParameterList #implementation
+rectangle GlobalData #implementation
+rectangle MutableData #implementation
+rectangle DivergentChange #implementation
+rectangle ShotgunSurgery #implementation
+rectangle FeatureEnvy #implementation
+rectangle DataClumps #implementation
+rectangle PrimitiveObsession #implementation
+rectangle RepeatedSwitches #implementation
+rectangle Loops #implementation
+rectangle LazyElement #implementation
+rectangle SpeculativeGenerality #implementation
+rectangle TemporaryField #implementation
+rectangle MessageChains #implementation
+rectangle MiddleMan #implementation
+rectangle InsiderTrading #implementation
+rectangle LargeClass #implementation
+rectangle "AlternativeClasses\nWithDifferentInterfaces" as AlternativeClasses #implementation
+rectangle DataClass #implementation
+rectangle RefusedBequest #implementation
+rectangle Comments #implementation
+
+
+rectangle ChangeFunctionDeclaration #technology
+rectangle RenameVariable #technology
+rectangle RenameField #technology
+rectangle ExtractFunction #technology
+rectangle SlideStatements #technology
+rectangle PullUpMethod #technology
+rectangle ReplaceTempWithQuery #technology
+rectangle IntroduceParameterObject #technology
+rectangle PreserveWholeObject #technology
+rectangle ReplaceFunctionWithCommand #technology
+rectangle DecomposeConditional #technology
+rectangle ReplaceConditionalWithPolymorphism #technology
+rectangle SplitLoop #technology
+rectangle ReplaceParameterWithQuery #technology
+rectangle RemoveFlagArgument #technology
+rectangle CombineFunctionsIntoClass #technology
+rectangle EncapsulateVariable #technology
+rectangle SplitVariable #technology
+rectangle SeparateQueryFromModifier #technology
+rectangle RemoveSettingMethod #technology
+rectangle ReplaceDerivedVariableWithQuery #technology
+rectangle CombineFunctionsIntoClass #technology
+rectangle CombineFunctionsIntoTransform #technology
+rectangle ChangeReferenceToValue #technology
+rectangle SplitPhase #technology
+rectangle MoveFunction #technology
+rectangle ExtractClass #technology
+rectangle MoveField #technology
+rectangle InlineFunction #technology
+rectangle InlineClass #technology
+rectangle ReplacePrimitiveWithObject #technology
+rectangle ReplaceTypeCodeWithSubclasses #technology
+rectangle ReplaceLoopWithPipeline #technology
+rectangle CollapseHierarchy #technology
+rectangle RemoveDeadCode #technology
+rectangle IntroduceSpecialCase #technology
+rectangle RemoveMiddleMan #technology
+rectangle ReplaceSuperclassWithDelegate #technology
+rectangle ReplaceSubclassWithDelegate #technology
+rectangle HideDelegate #technology
+rectangle ExtractSuperclass #technology
+rectangle EncapsulateRecord #technology
+rectangle PushDownField #technology
+rectangle PushDownMethod #technology
+rectangle IntroduceAssertion #technology
+
+
+MysteriousName ..> ChangeFunctionDeclaration
+MysteriousName .u.> RenameVariable 
+MysteriousName .u.> RenameField 
+
+DuplicatedCode ..> ExtractFunction
+DuplicatedCode ..> SlideStatements
+DuplicatedCode ..> PullUpMethod
+
+LongFunction ..> ExtractFunction #blue
+LongFunction .u.> ReplaceTempWithQuery #blue
+LongFunction ..> IntroduceParameterObject #blue
+LongFunction ..> PreserveWholeObject #blue
+LongFunction .u.> ReplaceFunctionWithCommand #blue
+LongFunction .u.> DecomposeConditional #blue
+LongFunction ..> ReplaceConditionalWithPolymorphism #blue
+LongFunction .u.> SplitLoop #blue
+
+LongParameterList .u.> ReplaceParameterWithQuery
+LongParameterList .u.> PreserveWholeObject
+LongParameterList .r.> IntroduceParameterObject
+LongParameterList .l.> RemoveFlagArgument
+LongParameterList ..> CombineFunctionsIntoClass
+
+GlobalData .u.> EncapsulateVariable
+
+MutableData ..> EncapsulateVariable #green
+MutableData .l.> SplitVariable #green
+MutableData .u.> SlideStatements #green
+MutableData ..> ExtractFunction #green
+MutableData ...> SeparateQueryFromModifier #green
+MutableData ..> RemoveSettingMethod #green
+MutableData .u.> ReplaceDerivedVariableWithQuery #green
+MutableData ......> CombineFunctionsIntoClass #green
+MutableData ..> CombineFunctionsIntoTransform #green
+MutableData .u.> ChangeReferenceToValue #green
+
+DivergentChange ..> SplitPhase
+DivergentChange ..> MoveFunction
+DivergentChange ..> ExtractFunction
+DivergentChange ..> ExtractClass
+
+ShotgunSurgery ..> MoveFunction #green
+ShotgunSurgery ..> MoveField #green
+ShotgunSurgery ..> CombineFunctionsIntoClass #green
+ShotgunSurgery ..> CombineFunctionsIntoTransform #green
+ShotgunSurgery ..> SplitPhase #green
+ShotgunSurgery ..> InlineFunction #green
+ShotgunSurgery ..> InlineClass #green
+
+FeatureEnvy .u.> MoveFunction #green
+FeatureEnvy .u.> ExtractFunction #green
+
+DataClumps ..> ExtractClass
+DataClumps ..> IntroduceParameterObject
+DataClumps ..> PreserveWholeObject
+
+PrimitiveObsession ..> ReplacePrimitiveWithObject #green
+PrimitiveObsession ..> ReplaceTypeCodeWithSubclasses #green
+PrimitiveObsession ..> ReplaceConditionalWithPolymorphism #green
+
+RepeatedSwitches ..> ReplaceConditionalWithPolymorphism
+
+Loops .u.> ReplaceLoopWithPipeline
+
+LazyElement ..> InlineFunction
+LazyElement ..> InlineClass
+LazyElement ..> CollapseHierarchy
+
+SpeculativeGenerality ..> CollapseHierarchy #blue
+SpeculativeGenerality ..> InlineFunction #blue
+SpeculativeGenerality ..> InlineClass #blue
+SpeculativeGenerality ..> ChangeFunctionDeclaration #blue
+SpeculativeGenerality .u.> RemoveDeadCode #blue
+
+TemporaryField ..> ExtractClass
+TemporaryField ..> MoveFunction
+TemporaryField .u.> IntroduceSpecialCase
+
+MessageChains ..> HideDelegate #blue
+MessageChains ..> ExtractFunction #blue
+MessageChains ..> MoveFunction #blue
+
+MiddleMan .u.> RemoveMiddleMan #blue
+MiddleMan .u.> InlineFunction #blue
+MiddleMan .u.> ReplaceSuperclassWithDelegate #blue
+MiddleMan .u.> ReplaceSubclassWithDelegate #blue
+
+InsiderTrading .u....> MoveFunction
+InsiderTrading .u....> MoveField
+InsiderTrading .u....> HideDelegate
+InsiderTrading .u....> ReplaceSuperclassWithDelegate
+InsiderTrading .u....> ReplaceSubclassWithDelegate
+
+LargeClass ..> ExtractClass #green
+LargeClass ..> ExtractSuperclass #green
+LargeClass ..> ReplaceTypeCodeWithSubclasses #green
+
+AlternativeClasses ..> ChangeFunctionDeclaration #green
+AlternativeClasses ..> MoveFunction #green
+AlternativeClasses ..> ExtractSuperclass #green
+
+DataClass .u...> EncapsulateRecord #blue
+DataClass .u...> RemoveSettingMethod #blue
+DataClass .u...> MoveFunction #blue
+DataClass .u...> ExtractFunction #blue
+DataClass .u...> SplitPhase #blue
+
+RefusedBequest .u.> PushDownMethod
+RefusedBequest .u.> PushDownField
+RefusedBequest ..> ReplaceSuperclassWithDelegate
+RefusedBequest ..> ReplaceSubclassWithDelegate
+
+Comments ..> ExtractFunction #blue
+Comments ..> ChangeFunctionDeclaration #blue
+Comments .u.> IntroduceAssertion #blue
+
+''''''''''''''''
+
+LongFunction .u..> MysteriousName #transparent
+LongParameterList .u..> DuplicatedCode #transparent
+MutableData .u......> LongFunction #transparent
+DuplicatedCode .l.> MysteriousName #transparent
+SpeculativeGenerality .r.> MysteriousName #transparent
+LongFunction . RepeatedSwitches #transparent
+PrimitiveObsession .l. RepeatedSwitches #transparent
+ShotgunSurgery ....u. DivergentChange #transparent
+MessageChains ....u. DivergentChange #transparent
+CombineFunctionsIntoTransform .u... ExtractFunction #transparent
+SplitPhase .u... MoveFunction #transparent
+
+
+'''''''''''''
+right footer (CC-BY) RGV, 2021
+@enduml
