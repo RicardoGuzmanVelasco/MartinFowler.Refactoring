@@ -16,14 +16,18 @@ It says:
 Within [Theatre folder](./Theatre), different versions of the code follow how he uses baby steps to reshape the code.  
 These code versioning set the original (v1) structure as the following:
 
-![](Theatre/Documentation~/Diagrams/v01.png)  
-![](Theatre/Documentation~/Diagrams/v02.png)  
-![](Theatre/Documentation~/Diagrams/v03.png)  
-![](Theatre/Documentation~/Diagrams/v04.png)  
-![](Theatre/Documentation~/Diagrams/v05.png)  
-![](Theatre/Documentation~/Diagrams/v06.png)  
-![](Theatre/Documentation~/Diagrams/v07.png)  
-![](Theatre/Documentation~/Diagrams/v08.png)  
-![](Theatre/Documentation~/Diagrams/v09.png)  
-![](Theatre/Documentation~/Diagrams/v10.png)  
-![](Theatre/Documentation~/Diagrams/v11.png)  
+![](Theatre/Documentation~/Diagrams/v01.png)
+![](Theatre/Documentation~/Diagrams/v02.png)
+![](Theatre/Documentation~/Diagrams/v03.png)
+![](Theatre/Documentation~/Diagrams/v04.png)
+![](Theatre/Documentation~/Diagrams/v05.png)
+![](Theatre/Documentation~/Diagrams/v06.png)
+![](Theatre/Documentation~/Diagrams/v07.png)
+![](Theatre/Documentation~/Diagrams/v08.png)
+![](Theatre/Documentation~/Diagrams/v09.png)
+![](Theatre/Documentation~/Diagrams/v10.png)
+![](Theatre/Documentation~/Diagrams/v11.png)
+
+## Smells and refactorings catalog
+
+![](Smells/Smells.png)
